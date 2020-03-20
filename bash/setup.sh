@@ -15,7 +15,7 @@ LOCATION=$3
 
 
 length=${#SHORT_NAME}
-if [ $length -lt 2 -o $length -gt 11 ] ;then
+if [ $length -lt 2 -o $length -gt 13 ] ;then
     echo "length invalid"
     die
 fi
