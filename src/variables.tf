@@ -13,6 +13,14 @@ variable "az_storage_account_name" {
   type        = string
 }
 
+variable "az_storage_container_name" {
+  description = "(Required) The storage container name."
+  type        = string
+}
+
+
+
+
 variable "az_plan" {
   description = "(Required) az_plan."
   type        = string
