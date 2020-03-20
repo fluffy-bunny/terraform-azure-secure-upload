@@ -73,6 +73,12 @@ export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
 ```
 since I do an Azure Login, I just pull some of the ID's based on the current logged in principal.  
 
+The following gets a SAS token that is compatible with azcopy.  
+```bash
 
+AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh)
 
+sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/a/b/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
+
+```
 
