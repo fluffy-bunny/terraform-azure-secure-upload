@@ -45,6 +45,11 @@ jobs:
       with:
         who-to-greet: ${{ steps.buildnumber.outputs.build_number }}
 
+    - name: 'Terraform Init'
+      shell: bash
+      run: |
+        echo 'build_number:'${{ steps.buildnumber.outputs.build_number }}
+
     - name: 'az login'
       uses: azure/login@v1
       with:
