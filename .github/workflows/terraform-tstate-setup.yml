@@ -32,6 +32,19 @@ jobs:
     needs: Setup-Azure-Terraform-Backend-State-Management
     runs-on: ubuntu-latest
     steps:
+
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v2 
+      with:
+        token: ${{secrets.github_token}} 
+
+    # Now you can pass ${{ steps.buildnumber.outputs.build_number }} to the next steps.
+    - name: Another step as an example
+      uses: actions/hello-world-docker-action@v1
+      with:
+        who-to-greet: ${{ steps.buildnumber.outputs.build_number }}
+
     - name: 'az login'
       uses: azure/login@v1
       with:
