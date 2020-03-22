@@ -6,6 +6,8 @@ on:
 env:
   FRIENDLY_NAME: secure-upload  
   SHORT_NAME: secureupload  
+  STORAGE_ACCOUNT_NAME: stsecureupload
+  CONTAINER_NAME: intake
   LOCATION: 'eastus2'
   VAULT_NAME: 'kv-tf-secure-upload'                
 jobs:
@@ -135,7 +137,6 @@ jobs:
         # tar -xvf downloadazcopy-v10-linux
         tar -xvf azcopy_linux_amd64_10.3.4.tar.gz
         sudo cp ./azcopy_linux_amd64_*/azcopy /usr/local/bin/
-        sudo chmod 777 /usr/local/bin/azcopy
         sudo chmod +x /usr/local/bin
         sudo azcopy --version
         popd
@@ -144,9 +145,13 @@ jobs:
       shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        stName=${{ env.STORAGE_ACCOUNT_NAME }}
+        cntrName=${{ env.CONTAINER_NAME }}
+        bldNum=${{ steps.buildnumber.outputs.build_number }}
+
         sudo chmod 777 ./gen-sas-for-azcopy.sh
-        AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh stsecureupload intake)
-        sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/${{ steps.buildnumber.outputs.build_number }}/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
+        AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh $stName $cntrName)
+        sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/$bldNum/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
         popd
     
 
