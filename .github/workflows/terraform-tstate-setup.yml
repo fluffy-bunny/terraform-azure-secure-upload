@@ -49,7 +49,7 @@ jobs:
           echo "Directory terraform exists." 
           rm -r terraform
         fi
-        wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+        # wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
         unzip terraform_0.12.24_linux_amd64.zip 
         sudo cp terraform /usr/local/bin
         sudo chmod +x /usr/local/bin
@@ -101,3 +101,21 @@ jobs:
         cd src/
         terraform apply tf.plan
         popd 
+
+    - name: 'Install AzCopy'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        sudo apt-get install wget unzip
+        if [ -d "azcopy_linux_amd64_10.3.4" ] 
+        then
+          echo "Directory azcopy_linux_amd64_10.3.4 exists." 
+          rm -r azcopy_linux_amd64_10.3.4
+        fi
+        # wget https://aka.ms/downloadazcopy-v10-linux
+        # tar -xvf downloadazcopy-v10-linux
+        tar -xvf azcopy_linux_amd64_10.3.4.tar.gz
+        sudo rm /usr/bin/azcopy
+        sudo cp ./azcopy_linux_amd64_*/azcopy /usr/local/bin/
+        azcopy --version
+        popd
