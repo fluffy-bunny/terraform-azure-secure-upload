@@ -143,8 +143,7 @@ jobs:
       shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-        sudo ./
-        AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh)
+        AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh stsecureupload intake)
         azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/${{ steps.buildnumber.outputs.build_number }}/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
         popd
     
