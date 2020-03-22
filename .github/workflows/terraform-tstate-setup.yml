@@ -112,10 +112,15 @@ jobs:
           echo "Directory azcopy_linux_amd64_10.3.4 exists." 
           rm -r azcopy_linux_amd64_10.3.4
         fi
+        if [ -f "/usr/local/bin/azcopy" ] 
+        then
+          echo "File /usr/local/bin/azcopy exists." 
+           sudo rm /usr/local/bin/azcopy
+        fi
+
         # wget https://aka.ms/downloadazcopy-v10-linux
         # tar -xvf downloadazcopy-v10-linux
         tar -xvf azcopy_linux_amd64_10.3.4.tar.gz
-        sudo rm /usr/local/bin/azcopy
         sudo cp ./azcopy_linux_amd64_*/azcopy /usr/local/bin/
         sudo chmod +x /usr/local/bin
         sudo azcopy --version
