@@ -82,3 +82,7 @@ sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v00
 
 ```
 
+# Run Local
+```bash
+act --env-file my.env -P ubuntu-latest=nektos/act-environments-ubuntu:18.04   
+```
