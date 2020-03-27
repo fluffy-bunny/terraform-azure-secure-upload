@@ -160,5 +160,3 @@ jobs:
         sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/$bldNum/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
         popd
     
-
-       
