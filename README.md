@@ -1,3 +1,4 @@
+![fluffy-bunny-banner](https://raw.githubusercontent.com/fluffy-bunny/static-assets/master/fluffy-bunny-banner.png)  
 # terraform-azure-backend-setup
 Sets up an Azure storage account to use for terraform state management is a 2 step process.
 1. Create a service principal that has the rights to create resources in a given subscription.
