@@ -11,11 +11,15 @@ terraform {
 }
 # Configure the Azure provider
 provider "azurerm" {
-  version = "=1.44.0"
+  version = "=2.0.0"
+  features {
+   
+  }
 }
 resource "azurerm_resource_group" "rg" {
   name     = var.az_resource_group_name
   location = var.az_resource_group_location
+  tags     = var.tags
 }
 
 data "azurerm_subscription" "primary" {}
@@ -29,6 +33,7 @@ resource "azurerm_storage_account" "main" {
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags     = var.tags
 }
 resource "azurerm_storage_container" "main" {
   name                  = var.az_storage_container_name

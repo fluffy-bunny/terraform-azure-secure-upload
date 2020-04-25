@@ -34,11 +34,12 @@ variable "az_func_name" {
   type        = string
 }
 
-
+ 
 variable "tags" {
   description = "Tags to help identify various services."
   type        = map
   default = {
+    Org            = "ssa"
     DeployedBy     = "terraform"
     Environment    = "prod"
     OwnerEmail     = "DL-P7-OPS@p7.com"

@@ -6,4 +6,4 @@ az_plan = "plan-secure-upload"
 az_app_insights = "appis-secure-upload"
 az_func_name = "azfunc-secure-upload"
 
-# export ARM_ACCESS_KEY=$(az keyvault secret show --name terraform-backend-key --vault-name kv-tf-heidi --query value -o tsv)
+# export ARM_ACCESS_KEY=$(az keyvault secret show --name terraform-backend-key --vault-name kv-tf-secureupload --query value -o tsv)
