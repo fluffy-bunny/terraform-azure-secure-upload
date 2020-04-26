@@ -123,6 +123,13 @@ jobs:
         terraform apply tf.plan
         popd 
 
+    - name: 'Assign Roles'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        ./az-assign-roles.sh
+        popd 
+
     - name: 'az copy install'
       uses: kheiakiyama/install-azcopy-action@v1
       with:
