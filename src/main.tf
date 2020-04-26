@@ -16,6 +16,7 @@ provider "azurerm" {
    
   }
 }
+ 
 resource "azurerm_resource_group" "rg" {
   name     = var.az_resource_group_name
   location = var.az_resource_group_location
@@ -39,4 +40,4 @@ resource "azurerm_storage_container" "main" {
   name                  = var.az_storage_container_name
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
-}
+}  

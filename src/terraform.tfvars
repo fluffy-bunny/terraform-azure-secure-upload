@@ -1,5 +1,5 @@
 az_resource_group_location = "eastus2"
-az_resource_group_name = "rg-secure-upload"
+az_resource_group_name = "rg-secureupload"
 az_storage_account_name = "stsecureupload"
 az_storage_container_name = "intake"
 az_plan = "plan-secure-upload"
