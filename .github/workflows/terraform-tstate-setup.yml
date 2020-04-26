@@ -127,6 +127,7 @@ jobs:
       shell: bash
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+         sudo chmod 777 ./az-assign-roles.sh
         ./az-assign-roles.sh
         popd 
 
