@@ -1,4 +1,4 @@
-name: Deploy DotNet project to Azure Function App
+name: Terraform Azure Secure Upload Setup
 
 on:
   [push]
@@ -123,40 +123,17 @@ jobs:
         terraform apply tf.plan
         popd 
 
-    - name: 'Install AzCopy'
-      shell: bash
-      run: |
-        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-        sudo apt-get install wget unzip
-        if [ -d "azcopy_linux_amd64_10.3.4" ] 
-        then
-          echo "Directory azcopy_linux_amd64_10.3.4 exists." 
-          rm -r azcopy_linux_amd64_10.3.4
-        fi
-        if [ -f "/usr/local/bin/azcopy" ] 
-        then
-          echo "File /usr/local/bin/azcopy exists." 
-           sudo rm /usr/local/bin/azcopy
-        fi
-
-        # wget https://aka.ms/downloadazcopy-v10-linux
-        # tar -xvf downloadazcopy-v10-linux
-        tar -xvf azcopy_linux_amd64_10.3.4.tar.gz
-        sudo cp ./azcopy_linux_amd64_*/azcopy /usr/local/bin/
-        sudo chmod +x /usr/local/bin
-        sudo azcopy --version
-        popd
+    - name: 'az copy install'
+      uses: kheiakiyama/install-azcopy-action@v1
+      with:
+        version: 'v10'
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: 'Copy Files To Azure Storage'
-      shell: bash
+      shell: pwsh
       run: |
-        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-        stName=${{ env.STORAGE_ACCOUNT_NAME }}
-        cntrName=${{ env.CONTAINER_NAME }}
-        bldNum=${{ steps.buildnumber.outputs.build_number }}
-
-        sudo chmod 777 ./gen-sas-for-azcopy.sh
-        AZURE_STORAGE_SAS_TOKEN=$(./gen-sas-for-azcopy.sh $stName $cntrName)
-        sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v001/$bldNum/?$AZURE_STORAGE_SAS_TOKEN" --recursive=true --put-md5
-        popd
-    
+        azcopy_v10 --version 
+        $bldNum=${{ steps.buildnumber.outputs.build_number }}
+        $dest="https://${{env.STORAGE_ACCOUNT_NAME}}.blob.core.windows.net/${{env.CONTAINER_NAME}}/terraform-test/${bldNum}"
+        echo "dest: $dest"
+        azcopy_v10 copy "upload" $dest --overwrite=true --recursive=true --put-md5

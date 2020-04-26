@@ -1,4 +1,4 @@
--s TEST
+-P ubuntu-latest=nektos/act-environments-ubuntu:18.04
 -s TEST_WITH_VALUE=hello
 -s AZURE_CREDENTIALS
 -s INSTALL_AZCLI=true
