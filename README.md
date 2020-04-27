@@ -29,6 +29,11 @@ produces.
 ```
 This will create a service principal, which you can see in AD App Registration that has the rights to create resources in the subscription.  
 
+# TODO
+I had to manually assign "Owner" role at the subscription level to the SP, so that I could later add "Storage Blob Owner" to this sp at the storage account scope.
+
+
+
 
 # Secrets
 [project secrets](https://github.com/fluffy-bunny/terraform-azure-backend-setup/settings/secrets)
@@ -86,4 +91,4 @@ sudo azcopy cp "upload" "https://stsecureupload.blob.core.windows.net/intake/v00
 # Run Local
 ```bash
 act --env-file my.env -P ubuntu-latest=nektos/act-environments-ubuntu:18.04   
-```
+```  
