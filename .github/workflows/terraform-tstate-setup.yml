@@ -8,7 +8,8 @@ env:
   LOCATION: 'eastus2'
   STORAGE_ACCOUNT_NAME: stsecureupload
   CONTAINER_NAME: intake
-  VAULT_NAME: 'kv-tf-stsecureupload'           
+  VAULT_NAME: 'kv-tf-stsecureupload'
+  TAGS: 'Org=ssa DeployedBy=terraform Environment=prod OwnerEmail=DL-P7-OPS@p7.com Platform=na'           
   my_value: Hi  
   TEST_WITH_VALUE: ${{ secrets.TEST_WITH_VALUE }}
   RUN_LOCAL: ${{ secrets.RUN_LOCAL }}     
@@ -41,12 +42,12 @@ jobs:
 
     - name: Azure Terraform Setup
       id: tfsetup
-      uses: fluffy-bunny/action-docker-azure-terraform-setup@v0.1-alpha
+      uses: fluffy-bunny/action-docker-azure-terraform-setup@v0.2-alpha
       with:
         shortName: ${{ env.SHORT_NAME }}
         location: ${{ env.LOCATION }}
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+        tags: ${{ env.TAGS }}
 
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
